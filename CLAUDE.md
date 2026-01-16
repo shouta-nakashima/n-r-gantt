@@ -2,6 +2,59 @@
 
 This document provides guidance for AI assistants working on the n-r-gantt project.
 
+---
+
+## 🔒 確定方針（変更不可）
+
+以下の方針は承認済みであり、明示的な許可なく変更してはいけません。
+
+### プロジェクトの目的
+
+- **React専用**のGanttチャートライブラリを作成する
+- **npm**で配布可能なパッケージとして公開する
+- **TypeScriptファースト**で型安全性を最優先する
+
+### 技術スタック（確定）
+
+| カテゴリ | 技術 | 変更不可 |
+|----------|------|:--------:|
+| 言語 | TypeScript 5.x (strict mode) | ✅ |
+| フレームワーク | React 18+ (peerDependency) | ✅ |
+| バンドラー | tsup | ✅ |
+| パッケージマネージャー | pnpm | ✅ |
+| Linting/Formatting | Biome | ✅ |
+| テスト | Vitest + React Testing Library | ✅ |
+| コンポーネント開発 | Storybook 8.x | ✅ |
+| レンダリング | SVG | ✅ |
+| 状態管理 | Context + useReducer | ✅ |
+| スタイリング | CSS + Custom Properties | ✅ |
+
+### アーキテクチャ決定（確定）
+
+1. **外部依存は最小限に**: React以外の大きな依存を避ける
+2. **SVGベースレンダリング**: Canvas fallbackは大量データ時のみ検討
+3. **Tree-shakeable設計**: 使用しない機能はバンドルに含めない
+4. **ESM/CJS両対応**: モダンとレガシー環境の両方をサポート
+
+### 開発フェーズ（確定）
+
+1. Phase 1: プロジェクト基盤のセットアップ
+2. Phase 2: コアアーキテクチャの設計・実装
+3. Phase 3: 主要機能の実装
+4. Phase 4: API設計の詳細化
+5. Phase 5: テスト戦略の実装
+6. Phase 6: ドキュメント作成
+7. Phase 7: npm公開準備
+
+### AIアシスタントへの指示
+
+- 上記の確定方針に反する提案・実装をしてはいけない
+- 技術スタックの変更が必要な場合は、必ずユーザーに確認を取る
+- 新しいライブラリの追加は最小限に抑え、追加時は理由を明示する
+- フェーズの順序を守り、スキップしない
+
+---
+
 ## Project Overview
 
 **n-r-gantt** is a modern, TypeScript-first React Gantt chart library designed for npm distribution. The library aims to provide developers with a powerful, customizable, and performant Gantt chart component.
@@ -276,4 +329,5 @@ pnpm build-storybook
 ---
 
 *Last updated: 2026-01-16*
-*Repository state: Planning complete, ready for implementation*
+*Repository state: Planning complete, policies locked, ready for implementation*
+*Policy version: 1.0 (approved)*
