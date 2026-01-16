@@ -33,8 +33,11 @@
     "test": "vitest",
     "test:run": "vitest run",
     "test:coverage": "vitest run --coverage",
-    "lint": "biome check src",
-    "lint:fix": "biome check --write src",
+    "lint": "biome lint src",
+    "lint:fix": "biome lint --write src",
+    "format:check": "biome format src --check",
+    "format": "biome format src --write",
+    "typecheck": "tsc --noEmit",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
     "prepublishOnly": "pnpm build && pnpm test:run"

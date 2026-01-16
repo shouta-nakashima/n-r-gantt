@@ -9,6 +9,8 @@
     "test": "pnpm --filter n-r-gantt test",
     "lint": "pnpm -r lint",
     "lint:fix": "pnpm -r lint:fix",
+    "format:check": "pnpm -r format:check",
+    "typecheck": "pnpm -r typecheck",
     "example": "pnpm --filter demo dev",
     "storybook": "pnpm --filter n-r-gantt storybook"
   },

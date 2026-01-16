@@ -7,7 +7,11 @@
     "dev": "vite",
     "build": "tsc && vite build",
     "preview": "vite preview",
-    "lint": "biome check src"
+    "lint": "biome lint src",
+    "lint:fix": "biome lint --write src",
+    "format:check": "biome format src --check",
+    "format": "biome format src --write",
+    "typecheck": "tsc --noEmit"
   },
   "dependencies": {
     "n-r-gantt": "workspace:*",
