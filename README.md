@@ -23,20 +23,57 @@ pnpm install
 pnpm build
 ```
 
-## 開発
+## 開発の流れ
+
+### 1. ライブラリをビルド
 
 ```bash
-# デモアプリを起動（http://localhost:3000）
-pnpm example
+pnpm build
+```
 
-# ライブラリをwatchモードで開発
+ライブラリの変更を反映するには、ビルドが必要です。
+
+### 2. デモアプリで動作確認
+
+```bash
+pnpm example
+```
+
+ブラウザで http://localhost:3000 を開き、Ganttチャートの動作を確認できます。
+
+### 3. ライブラリを変更しながら開発
+
+ターミナルを2つ開いて並行実行すると効率的です。
+
+```bash
+# ターミナル1: ライブラリをwatchモードでビルド
 pnpm dev
 
-# テスト実行
+# ターミナル2: デモアプリを起動
+pnpm example
+```
+
+`pnpm dev` はファイル変更を検知して自動でリビルドします。
+デモアプリ側でリロードすると変更が反映されます。
+
+### 4. テスト実行
+
+```bash
+# テストを実行
 pnpm test
 
-# Lint
+# watchモードでテスト
+pnpm --filter n-r-gantt test
+```
+
+### 5. Lint
+
+```bash
+# 構文チェック
 pnpm lint
+
+# 自動修正
+pnpm lint:fix
 ```
 
 ## 使い方
@@ -58,6 +95,17 @@ function App() {
   return <Gantt tasks={tasks} />;
 }
 ```
+
+## コマンド一覧
+
+| コマンド | 説明 |
+|----------|------|
+| `pnpm install` | 依存関係インストール |
+| `pnpm build` | ライブラリをビルド |
+| `pnpm dev` | ライブラリをwatchモードでビルド |
+| `pnpm example` | デモアプリを起動 |
+| `pnpm test` | テスト実行 |
+| `pnpm lint` | Lint実行 |
 
 ## プロジェクト構成
 
