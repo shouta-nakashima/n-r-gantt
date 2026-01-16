@@ -79,59 +79,48 @@ This document provides guidance for AI assistants working on the n-r-gantt proje
 | Component Dev | Storybook 8.x | コンポーネント開発・ドキュメント |
 | Rendering | SVG | 任意のズームでクリアな表示 |
 
-## Project Structure
+## Project Structure (Monorepo)
+
+pnpm workspacesを使用したmonorepo構成です。
 
 ```
 n-r-gantt/
-├── src/
-│   ├── components/
-│   │   ├── Gantt/              # メインコンポーネント
-│   │   │   ├── Gantt.tsx
-│   │   │   ├── Gantt.types.ts
-│   │   │   ├── Gantt.test.tsx
-│   │   │   └── index.ts
-│   │   ├── Timeline/           # タイムラインヘッダー
-│   │   ├── TaskBar/            # タスクバー
-│   │   ├── TaskList/           # タスクリスト（左パネル）
-│   │   ├── DependencyLines/    # 依存関係の線
-│   │   └── index.ts
-│   ├── hooks/
-│   │   ├── useGanttState.ts    # 状態管理
-│   │   ├── useTimeline.ts      # タイムライン計算
-│   │   ├── useZoom.ts          # ズーム制御
-│   │   ├── useDragAndDrop.ts   # ドラッグ&ドロップ
-│   │   ├── useVirtualization.ts # 仮想スクロール
-│   │   └── index.ts
-│   ├── context/
-│   │   ├── GanttContext.tsx    # Context + useReducer
-│   │   └── index.ts
-│   ├── utils/
-│   │   ├── date-utils.ts       # 日付ユーティリティ
-│   │   ├── task-utils.ts       # タスク操作
-│   │   ├── dependency-utils.ts # 依存関係計算
-│   │   └── index.ts
-│   ├── types/
-│   │   ├── task.ts             # GanttTask型
-│   │   ├── dependency.ts       # GanttDependency型
-│   │   ├── config.ts           # GanttConfig型
-│   │   └── index.ts
-│   ├── styles/
-│   │   ├── gantt.css
-│   │   └── variables.css       # CSS Custom Properties
-│   └── index.ts                # パブリックAPI
-├── tests/
-│   ├── setup.ts
-│   └── utils/
-├── stories/                    # Storybookストーリー
-├── docs/                       # ドキュメント
-├── examples/                   # 使用例
-├── package.json
-├── tsconfig.json
-├── tsup.config.ts
-├── vitest.config.ts
-├── biome.json
+├── packages/
+│   └── n-r-gantt/              # ライブラリ本体（npmに公開）
+│       ├── src/
+│       │   ├── components/
+│       │   │   └── Gantt/      # メインコンポーネント
+│       │   ├── context/        # GanttContext (状態管理)
+│       │   ├── hooks/          # カスタムフック
+│       │   ├── types/          # 型定義
+│       │   ├── utils/          # ユーティリティ
+│       │   └── index.ts        # パブリックAPI
+│       ├── package.json
+│       ├── tsconfig.json
+│       ├── tsup.config.ts
+│       ├── vitest.config.ts
+│       └── biome.json
+├── examples/
+│   └── demo/                   # 実装確認用デモアプリ（Vite + React）
+│       ├── src/
+│       │   ├── App.tsx
+│       │   ├── main.tsx
+│       │   └── index.css
+│       ├── package.json
+│       ├── vite.config.ts
+│       └── index.html
+├── package.json                # ルートpackage.json（workspaceスクリプト）
+├── pnpm-workspace.yaml         # pnpm workspace設定
+├── .gitignore
 └── CLAUDE.md
 ```
+
+### パッケージ構成
+
+| パッケージ | パス | 説明 |
+|------------|------|------|
+| n-r-gantt | `packages/n-r-gantt` | ライブラリ本体（npmに公開） |
+| demo | `examples/demo` | 実装確認用Vite+Reactアプリ |
 
 ## Core Types
 
@@ -239,26 +228,35 @@ type ViewMode = 'hour' | 'quarter-day' | 'half-day' |
 ## Commands
 
 ```bash
-# 依存関係インストール
+# 依存関係インストール（ルートで実行）
 pnpm install
 
-# 開発モード（watch）
+# ライブラリ開発（watchモード）
 pnpm dev
 
-# ビルド
+# ライブラリビルド
 pnpm build
 
 # テスト
 pnpm test
-pnpm test:coverage
 
-# Lint
+# Lint（全パッケージ）
 pnpm lint
 pnpm lint:fix
 
 # Storybook
 pnpm storybook
-pnpm build-storybook
+
+# デモアプリ起動（実装確認用）
+pnpm example
+```
+
+### パッケージ別コマンド
+
+```bash
+# 特定パッケージのコマンド実行
+pnpm --filter n-r-gantt build    # ライブラリのビルド
+pnpm --filter demo dev           # デモアプリの起動
 ```
 
 ## Development Guidelines
@@ -320,11 +318,20 @@ pnpm build-storybook
 
 ## Important Files
 
+### ライブラリ (packages/n-r-gantt)
 - `src/types/index.ts` - 全データモデルとAPIコントラクト
 - `src/components/Gantt/Gantt.tsx` - メインコンポーネント
 - `src/context/GanttContext.tsx` - 状態管理の中心
-- `src/hooks/useDragAndDrop.ts` - 最も複雑なインタラクション
+- `src/hooks/useDragAndDrop.ts` - 最も複雑なインタラクション（未実装）
 - `package.json` - npm配布の基盤
+
+### デモアプリ (examples/demo)
+- `src/App.tsx` - デモアプリのメインコンポーネント
+- `src/main.tsx` - エントリーポイント
+
+### ルート
+- `pnpm-workspace.yaml` - monorepo設定
+- `package.json` - ワークスペーススクリプト
 
 ---
 

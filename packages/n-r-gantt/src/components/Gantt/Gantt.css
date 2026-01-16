@@ -1,0 +1,158 @@
+/* CSS Custom Properties for theming */
+:root {
+  --gantt-bg: #ffffff;
+  --gantt-border: #e5e7eb;
+  --gantt-header-bg: #f9fafb;
+  --gantt-text: #1f2937;
+  --gantt-text-secondary: #6b7280;
+  --gantt-task-bg: #3b82f6;
+  --gantt-task-progress: #1d4ed8;
+  --gantt-milestone: #8b5cf6;
+  --gantt-today: #f87171;
+  --gantt-grid-line: #e5e7eb;
+  --gantt-selected-bg: #eff6ff;
+  --gantt-hover-bg: #f3f4f6;
+}
+
+/* Container */
+.gantt-container {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  font-size: 14px;
+  color: var(--gantt-text);
+  background: var(--gantt-bg);
+  border: 1px solid var(--gantt-border);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.gantt {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+}
+
+/* Header */
+.gantt-header {
+  display: flex;
+  border-bottom: 1px solid var(--gantt-border);
+  background: var(--gantt-header-bg);
+  flex-shrink: 0;
+}
+
+.gantt-header-list {
+  display: flex;
+  align-items: center;
+  padding: 0 16px;
+  font-weight: 600;
+  border-right: 1px solid var(--gantt-border);
+  flex-shrink: 0;
+}
+
+.gantt-header-timeline {
+  display: flex;
+  overflow: hidden;
+}
+
+.gantt-header-cell {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  color: var(--gantt-text-secondary);
+  border-right: 1px solid var(--gantt-border);
+  flex-shrink: 0;
+}
+
+/* Body */
+.gantt-body {
+  display: flex;
+  flex: 1;
+  overflow: hidden;
+}
+
+/* Task List */
+.gantt-task-list {
+  border-right: 1px solid var(--gantt-border);
+  overflow-y: auto;
+  flex-shrink: 0;
+}
+
+.gantt-task-list-row {
+  display: flex;
+  align-items: center;
+  padding: 0 16px;
+  border-bottom: 1px solid var(--gantt-border);
+  cursor: pointer;
+  transition: background-color 0.15s ease;
+}
+
+.gantt-task-list-row:hover {
+  background: var(--gantt-hover-bg);
+}
+
+.gantt-task-list-row.selected {
+  background: var(--gantt-selected-bg);
+}
+
+/* Timeline */
+.gantt-timeline {
+  flex: 1;
+  overflow: auto;
+}
+
+.gantt-timeline-svg {
+  display: block;
+}
+
+/* Grid lines */
+.gantt-grid-line {
+  stroke: var(--gantt-grid-line);
+  stroke-width: 1;
+}
+
+/* Today marker */
+.gantt-today-marker {
+  stroke: var(--gantt-today);
+  stroke-width: 2;
+  stroke-dasharray: 4, 4;
+}
+
+/* Task bar */
+.gantt-task-bar {
+  cursor: pointer;
+  transition: opacity 0.15s ease;
+}
+
+.gantt-task-bar:hover {
+  opacity: 0.9;
+}
+
+.gantt-task-bar.selected .gantt-task-bg {
+  stroke: #1e40af;
+  stroke-width: 2;
+}
+
+.gantt-task-bg {
+  transition: all 0.15s ease;
+}
+
+.gantt-task-progress {
+  opacity: 1;
+}
+
+.gantt-task-label {
+  font-size: 12px;
+  font-weight: 500;
+  pointer-events: none;
+}
+
+/* Milestone */
+.gantt-milestone {
+  transition: all 0.15s ease;
+}
+
+.gantt-task-bar.milestone.selected .gantt-milestone {
+  stroke: #5b21b6;
+  stroke-width: 2;
+}
